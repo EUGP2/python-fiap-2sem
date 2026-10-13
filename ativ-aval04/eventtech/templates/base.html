@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}EventTech{% endblock %} | EventTech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+    <header>
+        <div class="container">
+            <h1>EventTech</h1>
+            <p>Cadastro e controle de eventos</p>
+            <nav aria-label="Menu principal">
+                <a href="{{ url_for('inicio') }}">Início</a>
+                <a href="{{ url_for('listar_eventos') }}">Listar eventos</a>
+                <a href="{{ url_for('cadastrar_evento') }}">Cadastrar evento</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="conteudo" class="container conteudo">
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem mensagem-{{ categoria }}" role="{{ 'alert' if categoria == 'erro' else 'status' }}">{{ mensagem }}</div>
+            {% endfor %}
+        {% endwith %}
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">EventTech &middot; Projeto de Programação em Python</div>
+    </footer>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

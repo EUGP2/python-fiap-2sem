@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos | EventTech</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; color: #222; }
+        h1 { color: #20465b; }
+        .tabela { overflow-x: auto; }
+        table { border-collapse: collapse; width: 100%; background: white; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background: #20465b; color: white; }
+    </style>
+</head>
+<body>
+    <h1>EventTech</h1>
+    <h2>Eventos cadastrados</h2>
+    <p>Dados consultados no banco no momento da exportação.</p>
+    {% if eventos %}
+    <div class="tabela">
+        <table>
+            <thead><tr><th>ID</th><th>Evento</th><th>Categoria</th><th>Data</th><th>Local</th><th>Capacidade</th><th>Valor</th><th>Responsável</th><th>Status</th></tr></thead>
+            <tbody>
+            {% for evento in eventos %}
+                <tr><td>{{ evento.id_evento }}</td><td>{{ evento.nome_evento }}</td><td>{{ evento.categoria }}</td><td>{{ evento.data_evento }}</td><td>{{ evento.local_evento }}</td><td>{{ evento.capacidade }}</td><td>{{ evento.valor_ingresso | moeda }}</td><td>{{ evento.responsavel }}</td><td>{{ evento.status }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}<p>Nenhum evento cadastrado.</p>{% endif %}
+</body>
+</html>

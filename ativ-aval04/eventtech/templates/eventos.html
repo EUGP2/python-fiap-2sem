@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block titulo %}Lista de eventos{% endblock %}
+{% block conteudo %}
+    <h2>Lista de eventos</h2>
+    <div class="acoes">
+        <a class="botao" href="{{ url_for('cadastrar_evento') }}">Cadastrar evento</a>
+        <a href="{{ url_for('exportar_html') }}">Baixar HTML</a>
+        <a href="{{ url_for('exportar_json') }}">Baixar JSON</a>
+    </div>
+
+    <form class="consulta-id" method="get" action="{{ url_for('consultar_evento') }}">
+        <div class="campo">
+            <label for="id_evento">Consultar pelo ID</label>
+            <input type="number" id="id_evento" name="id_evento" min="1" step="1" required>
+        </div>
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if eventos %}
+        <div class="tabela-container" tabindex="0" aria-label="Tabela de eventos. Role para os lados para ver todas as colunas.">
+            <table>
+                <caption>Eventos cadastrados</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Local</th>
+                        <th scope="col">Capacidade</th>
+                        <th scope="col">Ingresso</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evento in eventos %}
+                        <tr>
+                            <td>{{ evento.id_evento }}</td>
+                            <td>{{ evento.nome_evento }}</td>
+                            <td>{{ evento.categoria }}</td>
+                            <td class="sem-quebra">{{ evento.data_evento | data_br }}</td>
+                            <td>{{ evento.local_evento }}</td>
+                            <td>{{ evento.capacidade }}</td>
+                            <td class="sem-quebra">{{ evento.valor_ingresso | moeda }}</td>
+                            <td>{{ evento.responsavel }}</td>
+                            <td>{{ evento.status }}</td>
+                            <td class="acoes-tabela">
+                                <a href="{{ url_for('detalhar_evento', id_evento=evento.id_evento) }}">Consultar</a>
+                                <a href="{{ url_for('editar_evento', id_evento=evento.id_evento) }}">Editar</a>
+                                <a href="{{ url_for('excluir_evento', id_evento=evento.id_evento) }}">Excluir</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="lista-vazia">Nenhum evento cadastrado. Clique em “Cadastrar evento” para começar.</p>
+    {% endif %}
+{% endblock %}

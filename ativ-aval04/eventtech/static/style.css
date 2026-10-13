@@ -1,0 +1,335 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f4f4f4;
+    color: #222;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+.container {
+    width: calc(100% - 32px);
+    max-width: 1100px;
+    margin: 0 auto;
+    min-width: 0;
+}
+
+header {
+    padding: 20px 0;
+    background: #244a6b;
+    color: #fff;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.65rem;
+}
+
+header p {
+    margin: 4px 0 16px;
+}
+
+nav,
+.acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+nav a {
+    color: #fff;
+}
+
+.conteudo {
+    flex: 1;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 24px;
+    border: 1px solid #ccc;
+    background: #fff;
+    overflow-wrap: anywhere;
+}
+
+h2 {
+    margin: 0 0 16px;
+    font-size: 1.4rem;
+}
+
+a {
+    color: #174a76;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+button,
+.botao {
+    display: inline-block;
+    padding: 9px 14px;
+    border: 1px solid #244a6b;
+    border-radius: 3px;
+    background: #244a6b;
+    color: #fff;
+    font: inherit;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover,
+.botao:hover {
+    background: #19364e;
+    color: #fff;
+}
+
+.botao-secundario {
+    border-color: #777;
+    background: #eee;
+    color: #222;
+}
+
+.botao-secundario:hover {
+    background: #ddd;
+    color: #222;
+}
+
+.botao-perigo {
+    border-color: #912b2b;
+    background: #912b2b;
+}
+
+.botao-perigo:hover {
+    background: #702020;
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.tabela-container:focus-visible {
+    outline: 3px solid #d79800;
+    outline-offset: 3px;
+}
+
+.pular-conteudo {
+    position: absolute;
+    top: -80px;
+    left: 16px;
+    padding: 8px 12px;
+    background: #fff;
+    color: #222;
+    z-index: 1;
+}
+
+.pular-conteudo:focus {
+    top: 8px;
+}
+
+.mensagem {
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    background: #f4f4f4;
+}
+
+.mensagem p {
+    margin: 0 0 8px;
+}
+
+.mensagem ul {
+    margin: 0;
+    padding-left: 24px;
+}
+
+.mensagem-sucesso {
+    border-color: #78a77d;
+    background: #edf6ee;
+    color: #234e29;
+}
+
+.mensagem-erro {
+    border-color: #c28a8a;
+    background: #fbefef;
+    color: #792121;
+}
+
+.consulta-id {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.consulta-id .campo {
+    width: 190px;
+    max-width: 100%;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input,
+select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 9px;
+    border: 1px solid #888;
+    border-radius: 3px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+}
+
+input[readonly] {
+    background: #eee;
+}
+
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 800px;
+}
+
+.campo-inteiro {
+    grid-column: 1 / -1;
+}
+
+.busca-cep {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.busca-cep input {
+    width: 180px;
+    max-width: 100%;
+}
+
+.ajuda {
+    margin: 6px 0 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.ajuda-erro {
+    color: #792121;
+}
+
+.tabela-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+}
+
+caption {
+    padding: 0 0 8px;
+    text-align: left;
+    font-weight: bold;
+}
+
+th,
+td {
+    padding: 9px;
+    border: 1px solid #bbb;
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: normal;
+}
+
+th {
+    background: #eee;
+}
+
+.sem-quebra,
+.acoes-tabela a {
+    white-space: nowrap;
+}
+
+.acoes-tabela a {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.lista-vazia {
+    padding: 16px;
+    border: 1px solid #ccc;
+    background: #f8f8f8;
+}
+
+.dados-evento {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    margin: 0 0 24px;
+}
+
+.dados-evento dt,
+.dados-evento dd {
+    margin: 0;
+    padding: 9px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.dados-evento dt {
+    padding-right: 12px;
+    font-weight: bold;
+}
+
+footer {
+    width: 100%;
+    padding: 16px 0;
+    background: #e3e3e3;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+    .conteudo {
+        padding: 16px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .formulario {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dados-evento {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dados-evento dt {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    .dados-evento dd {
+        padding-top: 3px;
+    }
+}

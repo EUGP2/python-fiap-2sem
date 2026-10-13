@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block titulo %}Excluir evento{% endblock %}
+{% block conteudo %}
+    <h2>Excluir evento</h2>
+    <p>Confirme se deseja excluir o evento abaixo. A exclusão remove o cadastro.</p>
+    <dl class="dados-evento">
+        <dt>ID</dt><dd>{{ evento.id_evento }}</dd>
+        <dt>Nome</dt><dd>{{ evento.nome_evento }}</dd>
+        <dt>Categoria</dt><dd>{{ evento.categoria }}</dd>
+        <dt>Data do evento</dt><dd>{{ evento.data_evento | data_br }}</dd>
+        <dt>Local</dt><dd>{{ evento.local_evento }}</dd>
+        <dt>Capacidade</dt><dd>{{ evento.capacidade }}</dd>
+        <dt>Valor do ingresso</dt><dd>{{ evento.valor_ingresso | moeda }}</dd>
+        <dt>Responsável</dt><dd>{{ evento.responsavel }}</dd>
+        <dt>Status</dt><dd>{{ evento.status }}</dd>
+    </dl>
+    <form method="post" action="{{ url_for('excluir_evento', id_evento=evento.id_evento) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <div class="acoes">
+            <button class="botao-perigo" type="submit" name="confirmar" value="S">Confirmar exclusão</button>
+            <a class="botao botao-secundario" href="{{ url_for('listar_eventos') }}">Cancelar</a>
+        </div>
+    </form>
+{% endblock %}

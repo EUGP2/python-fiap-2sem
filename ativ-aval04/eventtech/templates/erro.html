@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block conteudo %}
+    <h2>{{ titulo }}</h2>
+    <p>{{ mensagem }}</p>
+    {% if codigo %}<p class="ajuda">Código: {{ codigo }}</p>{% endif %}
+    <div class="acoes">
+        <a class="botao" href="{{ url_for('listar_eventos') }}">Voltar para a lista</a>
+        <a class="botao botao-secundario" href="{{ url_for('inicio') }}">Ir para o início</a>
+    </div>
+{% endblock %}

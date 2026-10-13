@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block titulo %}Início{% endblock %}
+{% block conteudo %}
+    <h2>Bem-vindo ao EventTech</h2>
+    <p>Use o sistema para cadastrar, consultar, editar e excluir eventos.</p>
+    <p>Na lista de eventos, você também pode baixar os dados em HTML ou JSON.</p>
+    <div class="acoes">
+        <a class="botao" href="{{ url_for('listar_eventos') }}">Listar eventos</a>
+        <a class="botao botao-secundario" href="{{ url_for('cadastrar_evento') }}">Cadastrar evento</a>
+    </div>
+{% endblock %}

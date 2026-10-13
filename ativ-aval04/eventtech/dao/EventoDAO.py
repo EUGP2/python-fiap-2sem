@@ -1,9 +1,9 @@
-import ConnectionFactory
+from . import ConnectionFactory
 import oracledb
 
 class EventoDAO:
-    def __init__(self):
-        self.banco = ConnectionFactory.ConnectionFactory()
+    def __init__(self, banco=None):
+        self.banco = banco if banco is not None else ConnectionFactory.ConnectionFactory()
 
     def incluir(self, evento):
         conn = None
@@ -54,10 +54,13 @@ class EventoDAO:
             )
             conn.commit()
             return True, "Evento cadastrado com sucesso!"
-        except oracledb.Error as erro:
+        except (oracledb.Error, ValueError) as erro:
             if conn:
                 conn.rollback()
-            return False, f"Erro ao cadastrar: {erro}"
+            detalhe = erro.args[0] if erro.args else None
+            if getattr(detalhe, "code", None) == 1:
+                return False, "Já existe um evento com esse ID."
+            return False, "Não foi possível cadastrar o evento. Tente novamente."
         finally:
             if cursor:
                 cursor.close()
@@ -88,8 +91,8 @@ class EventoDAO:
             cursor.execute(sql)
             eventos = cursor.fetchall()
             return True, eventos
-        except oracledb.Error as erro:
-            return False, f"Erro ao listar eventos: {erro}"
+        except (oracledb.Error, ValueError):
+            return False, "Não foi possível listar os eventos. Tente novamente."
         finally:
             if cursor:
                 cursor.close()
@@ -133,8 +136,8 @@ class EventoDAO:
                 "status": evento[8],
                 "data_cadastro": evento[9],
             }
-        except oracledb.Error as erro:
-            return False, f"Erro ao buscar evento: {erro}"
+        except (oracledb.Error, ValueError):
+            return False, "Não foi possível consultar o evento. Tente novamente."
         finally:
             if cursor:
                 cursor.close()
@@ -157,8 +160,7 @@ class EventoDAO:
                     CAPACIDADE = :capacidade,
                     VALOR_INGRESSO = :valor_ingresso,
                     RESPONSAVEL = :responsavel,
-                    STATUS = :status,
-                    DATA_CADASTRO = :data_cadastro
+                    STATUS = :status
                 where ID_EVENTO = :id_evento
             """
             cursor.execute(
@@ -173,15 +175,16 @@ class EventoDAO:
                     "valor_ingresso": evento.valor_ingresso,
                     "responsavel": evento.responsavel,
                     "status": evento.status,
-                    "data_cadastro": evento.data_cadastro,
                 }
             )
             conn.commit()
+            if cursor.rowcount == 0:
+                return False, "Evento não encontrado."
             return True, "Evento alterado com sucesso!"
-        except oracledb.Error as erro:
+        except (oracledb.Error, ValueError):
             if conn:
                 conn.rollback()
-            return False, f"Erro ao alterar evento: {erro}"
+            return False, "Não foi possível alterar o evento. Tente novamente."
         finally:
             if cursor:
                 cursor.close()
@@ -195,21 +198,19 @@ class EventoDAO:
             conn = self.banco.conectar()
             cursor = conn.cursor()
             sql = """
-                update eventos
-                set STATUS = 'ENCERRADO'
+                delete from eventos
                 where ID_EVENTO = :id_evento
-                and STATUS <> 'ENCERRADO'
             """
             cursor.execute(sql, {"id_evento": id_evento})
             conn.commit()
 
             if cursor.rowcount > 0:
-                return True, "Evento encerrado com sucesso!"
-            return False, "Evento já está encerrado ou não existe."
-        except oracledb.Error as erro:
+                return True, "Evento excluído com sucesso!"
+            return False, "Evento não encontrado."
+        except (oracledb.Error, ValueError):
             if conn:
                 conn.rollback()
-            return False, f"Erro ao encerrar evento: {erro}"
+            return False, "Não foi possível excluir o evento. Tente novamente."
         finally:
             if cursor:
                 cursor.close()
